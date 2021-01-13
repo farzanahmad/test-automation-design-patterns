@@ -16,7 +16,7 @@ This guide is an open-source effort to explore various pivotal design patterns i
 
 ## Table of Contents
 
-1. **Introduction to Test Automation Design Patterns**
+1. **[Introduction to Test Automation Design Patterns](01-Introduction_to_Test_Automation_Design_Patterns.md)**
 2. **Page Object Model (POM)**
 3. **Factory Pattern**
 4. **Singleton Pattern**
