@@ -1,4 +1,8 @@
-# Test Automation Design Patterns
+<p align="center">
+  <img src="./.github/banner.svg" height="150px" style="background-color: white" />
+</p>
+
+***
 
 > Think like an architect, not just a tester.
 
