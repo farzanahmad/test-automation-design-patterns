@@ -20,21 +20,21 @@ Get ready to level up your test automation game! Inside this guide, you'll find:
 
 ### Table of Contents
 
-* Chapter 1: Introduction to Design Patterns
-* Chapter 2: The Page Object Model (POM)
-* Chapter 3: Test Data Factories
-* Chapter 4: The Singleton Pattern
-* Chapter 5: The Strategy Pattern
-* Chapter 6: The Decorator Pattern
-* Chapter 7: The Observer Pattern
-* Chapter 8: The Command Pattern
-* Chapter 9: Data-Driven Testing
-* Chapter 10: Keyword-Driven Testing
-* Chapter 11: The Builder Pattern
-* Chapter 12: The Chain of Responsibility Pattern
-* Chapter 13: Best Practices in Design Patterns
-* Chapter 14: Choosing the Right Design Pattern
-* Chapter 15: Continuing Your Design Pattern Journey
+* [Introduction to Design Patterns](#-introduction-to-design-patterns)
+* [Pattern #1: The Page Object Model (POM)](#-pattern-1-the-page-object-model-pom)
+* [Pattern #2: Test Data Factories](#-pattern-2-test-data-factories)
+* [Pattern #3: The Singleton Pattern](#-pattern-3-the-singleton-pattern)
+* [Pattern #4: The Strategy Pattern](#-pattern-4-the-strategy-pattern)
+* [Pattern #5: The Decorator Pattern](#-pattern-5-the-decorator-pattern)
+* [Pattern #6: The Observer Pattern](#-pattern-6-the-observer-pattern)
+* [Pattern #7: The Command Pattern](#-pattern-7-the-command-pattern)
+* [Pattern #8: Data-Driven Testing](#-pattern-8-data-driven-testing)
+* [Pattern #9: Keyword-Driven Testing](#-pattern-9-keyword-driven-testing)
+* [Pattern #10: The Builder Pattern](#-pattern-10-the-builder-pattern)
+* [Pattern #11: The Chain of Responsibility Pattern](#-pattern-11-the-chain-of-responsibility-pattern)
+* [Best Practices in Design Patterns](#-best-practices-in-design-patterns)
+* [Choosing the Right Design Pattern](#-choosing-the-right-design-pattern)
+* [Continuing Your Design Pattern Journey](#-continuing-your-design-pattern-journey)
 
 ### Contributing
 
@@ -76,7 +76,9 @@ This project is released under the [MIT License](license.md). This license grant
 
 We sincerely thank the dedicated individuals who enhanced the quality and value of this guide.
 
-# 🔎 Chapter 1: Introduction to Design Patterns
+***
+
+# 🔎 Introduction to Design Patterns
 
 Let's be honest, building a fantastic web app isn't enough—it's got to *work* flawlessly. But automated tests? They often become complex and brittle over time. Changes to your app can cause a cascade of broken tests, leaving you frustrated.
 
@@ -104,11 +106,11 @@ Imagine repeatedly testing a login form. A naive approach might look like this:
 const {test, expect} = require('@playwright/test');
 
 test('user can log in', async ({page}) => {
-   await page.goto('https://mycoolwebapp.com/login');
-   await page.locator('#username').fill('testuser');
-   await page.locator('#password').fill('supersecret');
-   await page.locator('button[type="submit"]').click();
-   // ...and so on
+    await page.goto('https://mycoolwebapp.com/login');
+    await page.locator('#username').fill('testuser');
+    await page.locator('#password').fill('supersecret');
+    await page.locator('button[type="submit"]').click();
+    // ...and so on
 });
 ```
 
@@ -116,18 +118,18 @@ Now, let's introduce the **Page Object Model (POM)** pattern. Create a `LoginPag
 
 ```javascript
 class LoginPage {
-   constructor(page) {
-      this.page = page;
-      this.usernameInput = page.locator('#username');
-      this.passwordInput = page.locator('#password');
-      this.loginButton = page.locator('button[type="submit"]');
-   }
+    constructor(page) {
+        this.page = page;
+        this.usernameInput = page.locator('#username');
+        this.passwordInput = page.locator('#password');
+        this.loginButton = page.locator('button[type="submit"]');
+    }
 
-   async login(username, password) {
-      await this.usernameInput.fill(username);
-      await this.passwordInput.fill(password);
-      await this.loginButton.click();
-   }
+    async login(username, password) {
+        await this.usernameInput.fill(username);
+        await this.passwordInput.fill(password);
+        await this.loginButton.click();
+    }
 }
 ```
 
@@ -135,10 +137,10 @@ Your test becomes more concise and focused:
 
 ```javascript
 test('user can log in', async ({page}) => {
-   const loginPage = new LoginPage(page);
-   await page.goto('https://mycoolwebapp.com/login');
-   await loginPage.login('testuser', 'supersecret');
-   // ...and so on
+    const loginPage = new LoginPage(page);
+    await page.goto('https://mycoolwebapp.com/login');
+    await loginPage.login('testuser', 'supersecret');
+    // ...and so on
 });
 ```
 
@@ -157,7 +159,7 @@ Let's build robust tests together! 💪
 
 ***
 
-# 🚀 Chapter 2: The Page Object Model (POM)
+# 🚀 Pattern #1: The Page Object Model (POM)
 
 Discover the power of the Page Object Model (POM), a cornerstone of effective web test automation. This pattern promotes the creation of structured and maintainable tests, empowering you to handle even the most dynamic web applications.
 
@@ -194,18 +196,18 @@ Consider using the POM whenever you're automating web application tests. It's pa
 
 ```javascript
 class LoginPage {
-   constructor(page) {
-      this.page = page;
-      this.usernameField = page.locator('#username');
-      this.passwordField = page.locator('#password');
-      this.loginButton = page.locator('button:has-text("Login")');
-   }
+    constructor(page) {
+        this.page = page;
+        this.usernameField = page.locator('#username');
+        this.passwordField = page.locator('#password');
+        this.loginButton = page.locator('button:has-text("Login")');
+    }
 
-   async login(username, password) {
-      await this.usernameField.fill(username);
-      await this.passwordField.fill(password);
-      await this.loginButton.click();
-   }
+    async login(username, password) {
+        await this.usernameField.fill(username);
+        await this.passwordField.fill(password);
+        await this.loginButton.click();
+    }
 }
 ```
 
@@ -221,7 +223,7 @@ Harness the power of the Page Object Model alongside Playwright to create test s
 
 ***
 
-# 🏭 Chapter 3: Test Data Factories
+# 🏭 Pattern #2: Test Data Factories
 
 Imagine crafting the ideal custom datasets for your tests. That's what the Factory pattern helps you achieve. Let's ditch the hassle of manually creating intricate test data and explore how factories can take your testing workflow to the next level.
 
@@ -253,17 +255,17 @@ Think of a factory as an assembly line but instead of cars, it produces your tes
 
 ```javascript
 class UserFactory {
-   constructor() {
-      this.faker = require('faker'); // Handy library for random data
-   }
+    constructor() {
+        this.faker = require('faker'); // Handy library for random data
+    }
 
-   createBasicUser() {
-      return {
-         name: this.faker.name.findName(),
-         email: this.faker.internet.email(),
-         password: 'testpassword123' // Keep it secure in a real app!
-      };
-   }
+    createBasicUser() {
+        return {
+            name: this.faker.name.findName(),
+            email: this.faker.internet.email(),
+            password: 'testpassword123' // Keep it secure in a real app!
+        };
+    }
 }
 ```
 
@@ -273,9 +275,9 @@ class UserFactory {
 const {test} = require('@playwright/test');
 
 test('new user can register', async ({page}) => {
-   const userFactory = new UserFactory();
-   const newUser = userFactory.createBasicUser();
-   // ... your test logic using the newUser object
+    const userFactory = new UserFactory();
+    const newUser = userFactory.createBasicUser();
+    // ... your test logic using the newUser object
 });
 ```
 
@@ -291,7 +293,7 @@ By simplifying test data generation with factories, you'll enhance the clarity, 
 
 ***
 
-# 👑 Chapter 4: The Singleton Pattern
+# 👑 Pattern #3: The Singleton Pattern
 
 Think of those situations in your test automation where you *really* only want one instance of something to exist – maybe it's a database connection, a log file handler, or that one browser instance you keep reusing. That's the realm of the Singleton pattern!
 
@@ -327,20 +329,20 @@ The core idea of the Singleton pattern is to make sure there's *never* more than
 
 ```javascript
 class BrowserManager {
-   async constructor() {
-      if (BrowserManager.instance) {
-         return BrowserManager.instance; // Ensure only one instance
-      }
-      this.browser = await playwright.chromium.launch(); // Just an example
-      BrowserManager.instance = this;
-   }
+    async constructor() {
+        if (BrowserManager.instance) {
+            return BrowserManager.instance; // Ensure only one instance
+        }
+        this.browser = await playwright.chromium.launch(); // Just an example
+        BrowserManager.instance = this;
+    }
 
-   static getInstance() {
-      if (!BrowserManager.instance) {
-         BrowserManager.instance = new BrowserManager();
-      }
-      return BrowserManager.instance;
-   }
+    static getInstance() {
+        if (!BrowserManager.instance) {
+            BrowserManager.instance = new BrowserManager();
+        }
+        return BrowserManager.instance;
+    }
 }
 ```
 
@@ -351,7 +353,7 @@ class BrowserManager {
 
 ***
 
-# 🥷 Chapter 5: The Strategy Pattern
+# 🥷 Pattern #4: The Strategy Pattern
 
 Let's talk about making your tests super flexible. Imagine being able to change how they handle different situations *without* tearing your test code apart. The Strategy pattern is exactly how you do that!
 
@@ -384,9 +386,9 @@ Think of it like this:
 ```javascript
 // This acts as a contract for our strategies:
 class LoginStrategy {
-   login(page, username, password) {
-      // This method is expected, but implementation left up to concrete strategies
-   }
+    login(page, username, password) {
+        // This method is expected, but implementation left up to concrete strategies
+    }
 }
 ```
 
@@ -394,15 +396,15 @@ class LoginStrategy {
 
 ```javascript
 class StandardLoginStrategy extends LoginStrategy {
-   async login(page, username, password) {
-      // Implementation for standard login form 
-   }
+    async login(page, username, password) {
+        // Implementation for standard login form 
+    }
 }
 
 class OAuthLoginStrategy extends LoginStrategy {
-   async login(page, username, password) {
-      // Implementation for OAuth login
-   }
+    async login(page, username, password) {
+        // Implementation for OAuth login
+    }
 }
 ```
 
@@ -410,15 +412,15 @@ class OAuthLoginStrategy extends LoginStrategy {
 
 ```javascript
 class LoginContext {
-   private strategy: LoginStrategy;
+    private strategy: LoginStrategy;
 
-   setStrategy(strategy: LoginStrategy) {
-      this.strategy = strategy;
-   }
+    setStrategy(strategy: LoginStrategy) {
+        this.strategy = strategy;
+    }
 
-   async performLogin(page, username, password) {
-      await this.strategy.login(page, username, password);
-   }
+    async performLogin(page, username, password) {
+        await this.strategy.login(page, username, password);
+    }
 }
 ```
 
@@ -428,7 +430,7 @@ class LoginContext {
 
 ***
 
-# ✨ Chapter 6: The Decorator Pattern
+# ✨ Pattern #5: The Decorator Pattern
 
 Think your test code could use a little extra oomph? The Decorator pattern lets you sprinkle in new functionality without needing a major rewrite. It's like adding those fancy toppings to a plain ice cream cone!
 
@@ -460,10 +462,10 @@ Imagine your tests sometimes flake out due to a weird loading spinner issue on y
 
 ```javascript
 function withSpinnerRetry(testFunction) {
-   return async ({page, ...context}, testInfo) => {
-      // Logic to wait for the spinner to disappear, 
-      //  and retry the test a few times if needed
-   };
+    return async ({page, ...context}, testInfo) => {
+        // Logic to wait for the spinner to disappear, 
+        //  and retry the test a few times if needed
+    };
 }
 ```
 
@@ -482,7 +484,7 @@ await testWithExtraPatience(page);
 
 ***
 
-# 👀 Chapter 7: The Observer Pattern
+# 👀 Pattern #6: The Observer Pattern
 
 Let's teach your test automation to keep an eye on things! The Observer pattern is perfect for setting up a system of automatic reactions within your tests, ensuring they respond to key changes and events.
 
@@ -514,21 +516,21 @@ While Playwright lacks a built-in system, building a basic one is surprisingly s
 
 ```javascript
 class TestSubject {
-   constructor() {
-      this.observers = [];
-   }
+    constructor() {
+        this.observers = [];
+    }
 
-   attach(observer) {
-      this.observers.push(observer);
-   }
+    attach(observer) {
+        this.observers.push(observer);
+    }
 
-   detach(observer) {
-      // ... remove observer from array ...
-   }
+    detach(observer) {
+        // ... remove observer from array ...
+    }
 
-   notify() {
-      this.observers.forEach(observer => observer.update(this));
-   }
+    notify() {
+        this.observers.forEach(observer => observer.update(this));
+    }
 }
 ```
 
@@ -536,9 +538,9 @@ class TestSubject {
 
 ```javascript
 class TestObserver {
-   update(subject) {
-      // React to changes in the subject
-   }
+    update(subject) {
+        // React to changes in the subject
+    }
 }
 ```
 
@@ -546,12 +548,12 @@ class TestObserver {
 
 ```javascript
 class LoginPage extends TestSubject {
-   // ... Login page logic ...
+    // ... Login page logic ...
 
-   async loginSuccessful() {
-      // ... login success ...
-      this.notify(); // Notify observers of login success
-   }
+    async loginSuccessful() {
+        // ... login success ...
+        this.notify(); // Notify observers of login success
+    }
 }
 ```
 
@@ -563,7 +565,7 @@ class LoginPage extends TestSubject {
 
 ***
 
-# 🕹️ Chapter 8: The Command Pattern
+# 🕹️ Pattern #7: The Command Pattern
 
 Ready to level up your test automation game? The Command pattern helps you package up test actions into reusable building blocks, making your tests easier to write, read, and change over time.
 
@@ -596,14 +598,14 @@ Let's keep it simple:
 
 ```javascript
 class ClickCommand {
-   constructor(selector, options) {
-      this.selector = selector;
-      this.options = options;
-   }
+    constructor(selector, options) {
+        this.selector = selector;
+        this.options = options;
+    }
 
-   async execute(page) {
-      await page.click(this.selector, this.options);
-   }
+    async execute(page) {
+        await page.click(this.selector, this.options);
+    }
 }
 ```
 
@@ -611,13 +613,13 @@ class ClickCommand {
 
 ```javascript
 class TestInvoker {
-   // ... other methods ...
+    // ... other methods ...
 
-   async executeCommands(commands) {
-      for (const command of commands) {
-         await command.execute(page);
-      }
-   }
+    async executeCommands(commands) {
+        for (const command of commands) {
+            await command.execute(page);
+        }
+    }
 }
 ```
 
@@ -629,7 +631,7 @@ class TestInvoker {
 
 ***
 
-# 📊 Chapter 9: Data-Driven Testing
+# 📊 Pattern #8: Data-Driven Testing
 
 Take your test automation to the next level! Data-driven testing lets you run a single test with different input sets, saving you time and boosting the chances of finding those frustrating edge-case bugs.
 
@@ -663,16 +665,16 @@ Playwright's flexibility gives you options. Here are two common approaches:
 const {test, expect} = require('@playwright/test');
 
 const testData = [
-   {username: 'standard_user', password: 'secret_sauce'},
-   {username: 'problem_user', password: 'secret_sauce'},
-   // ... more data 
+    {username: 'standard_user', password: 'secret_sauce'},
+    {username: 'problem_user', password: 'secret_sauce'},
+    // ... more data 
 ];
 
 for (const data of testData) {
-   test.use({storageState: `userState_${ data.username }.json`}) // Assuming pre-baked state
-   test(`login with ${ data.username }`, async ({page}) => {
-      // Test Logic using data.username and data.password
-   });
+    test.use({storageState: `userState_${ data.username }.json`}) // Assuming pre-baked state
+    test(`login with ${ data.username }`, async ({page}) => {
+        // Test Logic using data.username and data.password
+    });
 }
 ``` 
 
@@ -685,17 +687,17 @@ const csv = require('csv-parser');
 
 const data = [];
 fs.createReadStream('testData.csv')
-        .pipe(csv())
-        .on('data', (row) => data.push(row))
-        .on('end', () => {
-           test.describe('Data-driven tests', () => {
-              data.forEach(row => {
-                 test(`Test with data: ${ row }`, async ({page}) => {
+    .pipe(csv())
+    .on('data', (row) => data.push(row))
+    .on('end', () => {
+        test.describe('Data-driven tests', () => {
+            data.forEach(row => {
+                test(`Test with data: ${ row }`, async ({page}) => {
                     // Test logic using your row data
-                 });
-              });
-           });
+                });
+            });
         });
+    });
 ```
 
 ## Best Practices for Data-Driven Testing ✨
@@ -707,7 +709,7 @@ fs.createReadStream('testData.csv')
 
 ***
 
-# ⌨️ Chapter 10: Keyword-Driven Testing
+# ⌨️ Pattern #9: Keyword-Driven Testing
 
 Tired of writing tests that are hard to read and even harder to change? Keyword-driven testing can help!  The idea is to create reusable shortcuts that translate to actions in your tests.
 
@@ -742,12 +744,12 @@ Let's say logging in is a common part of many tests. Here's how keywords simplif
 
 ```javascript
 module.exports = {
-   async login(page, username, password) {
-      await page.fill('#username', username);
-      await page.fill('#password', password);
-      await page.click('button[type="submit"]');
-   },
-   // ... more keywords ...
+    async login(page, username, password) {
+        await page.fill('#username', username);
+        await page.fill('#password', password);
+        await page.click('button[type="submit"]');
+    },
+    // ... more keywords ...
 }
 ```
 
@@ -758,8 +760,8 @@ const {test, expect} = require('@playwright/test');
 const keywords = require('./keywords');
 
 test('Successful Login', async ({page}) => {
-   await keywords.login(page, 'testuser', 'password123');
-   // ... assertions ... 
+    await keywords.login(page, 'testuser', 'password123');
+    // ... assertions ... 
 });
 ```
 
@@ -772,7 +774,7 @@ test('Successful Login', async ({page}) => {
 
 ***
 
-# 🛠️ Chapter 11: The Builder Pattern
+# 🛠️ Pattern #10: The Builder Pattern
 
 Let's clean up those messy test object setups! The Builder pattern offers a way to create complex objects piece by piece, making your code easier to read and maintain.
 
@@ -803,27 +805,27 @@ Let's say we're testing a registration flow. Here's how a `UserBuilder` might lo
 
 ```javascript
 class UserBuilder {
-   constructor() {
-      this.name = 'Default Name';
-      this.email = 'default@email.com';
-      this.password = 'password123'; // Yikes, don't do this in real life!
-   }
+    constructor() {
+        this.name = 'Default Name';
+        this.email = 'default@email.com';
+        this.password = 'password123'; // Yikes, don't do this in real life!
+    }
 
-   setName(name) {
-      this.name = name;
-      return this; // This is important for chaining!
-   }
+    setName(name) {
+        this.name = name;
+        return this; // This is important for chaining!
+    }
 
-   setEmail(email) {
-      this.email = email;
-      return this;
-   }
+    setEmail(email) {
+        this.email = email;
+        return this;
+    }
 
-   // ... other setter methods ...
+    // ... other setter methods ...
 
-   build() {
-      return new UserData(this);
-   }
+    build() {
+        return new UserData(this);
+    }
 }
 ```
 
@@ -831,9 +833,9 @@ class UserBuilder {
 
 ```javascript
 const user = new UserBuilder()
-        .setName('Super Tester')
-        .setEmail('tester@awesometests.com')
-        .build();
+    .setName('Super Tester')
+    .setEmail('tester@awesometests.com')
+    .build();
 
 // Now use that awesome user object for testing!
 ```
@@ -847,7 +849,7 @@ const user = new UserBuilder()
 
 ***
 
-# 🔗 Chapter 12: The Chain of Responsibility Pattern
+# 🔗 Pattern #11: The Chain of Responsibility Pattern
 
 Let's streamline how your tests handle different events or actions!  The Chain of Responsibility pattern sets up a series of handlers, each checking if they can deal with a specific task. It's like passing work along an assembly line until the right expert is found.
 
@@ -876,26 +878,26 @@ Enough talk, let's see some code! Here's the basic structure:
 
 ```javascript
 class InteractionHandler {
-   constructor(successor) {
-      this.successor = successor;
-   }
+    constructor(successor) {
+        this.successor = successor;
+    }
 
-   async handleInteraction(page, element, interactionType) {
-      if (this.canHandle(interactionType)) {
-         return await this.doHandle(page, element);
-      } else if (this.successor) {
-         return await this.successor.handleInteraction(page, element, interactionType);
-      } else {
-         throw new Error('No suitable handler found');
-      }
-   }
+    async handleInteraction(page, element, interactionType) {
+        if (this.canHandle(interactionType)) {
+            return await this.doHandle(page, element);
+        } else if (this.successor) {
+            return await this.successor.handleInteraction(page, element, interactionType);
+        } else {
+            throw new Error('No suitable handler found');
+        }
+    }
 
-   // Abstract methods to be overridden in concrete handlers
-   canHandle(interactionType) {
-   }
+    // Abstract methods to be overridden in concrete handlers
+    canHandle(interactionType) {
+    }
 
-   async doHandle(page, element) {
-   }
+    async doHandle(page, element) {
+    }
 }
 ```
 
@@ -903,13 +905,13 @@ class InteractionHandler {
 
 ```javascript
 class ClickHandler extends InteractionHandler {
-   canHandle(interactionType) {
-      return interactionType === 'click';
-   }
+    canHandle(interactionType) {
+        return interactionType === 'click';
+    }
 
-   async doHandle(page, element) {
-      return await element.click();
-   }
+    async doHandle(page, element) {
+        return await element.click();
+    }
 }
 ```
 
@@ -921,7 +923,7 @@ class ClickHandler extends InteractionHandler {
 
 ***
 
-# 🌟 Chapter 13: Best Practices in Design Patterns
+# 🌟 Best Practices in Design Patterns
 
 You've got the pattern basics down, now let's take your test automation to the next level! Think of this chapter as the secret tips and tricks that separate the good testers from the pattern masters.
 
@@ -929,20 +931,20 @@ You've got the pattern basics down, now let's take your test automation to the n
 
 1. **The Power of Combos:**  Patterns don't exist in a vacuum! Sometimes the real magic happens when you combine them strategically:
 
-   * Use the Builder pattern to set up complex test objects, then execute them in a sequence using the Command pattern.
-   * The Observer pattern is perfect for setting up chains of reactions to events triggered by Commands.
+    * Use the Builder pattern to set up complex test objects, then execute them in a sequence using the Command pattern.
+    * The Observer pattern is perfect for setting up chains of reactions to events triggered by Commands.
 
 2. **Think in Layers:** Creating 'wrappers' around your patterns keeps your tests flexible:
 
-   * It lets you change how a pattern is implemented without breaking the tests themselves.
-   * Makes it easier to experiment with different variations of a pattern.
+    * It lets you change how a pattern is implemented without breaking the tests themselves.
+    * Makes it easier to experiment with different variations of a pattern.
 
 3. **Test Your Patterns:** Yep, even your fancy patterns deserve their own tests. This is especially important if they're core to your framework.
 
 4. **Sometimes, DIY is Best:** While pre-built pattern libraries exist, sometimes you only need a lightweight version of a pattern:
 
-   * Building your own helps you truly understand the nuances of *why* a pattern works.
-   * You avoid the complexity of a full-blown library when you don't need all the bells and whistles.
+    * Building your own helps you truly understand the nuances of *why* a pattern works.
+    * You avoid the complexity of a full-blown library when you don't need all the bells and whistles.
 
 5. **Growth Mindset:** Start small, and don't try to force patterns where they don't add value. Add them as your test suite grows in complexity.
 
@@ -958,7 +960,7 @@ You've got the pattern basics down, now let's take your test automation to the n
 
 ***
 
-# 💥 Chapter 14: Choosing the Right Design Pattern
+# 💥 Choosing the Right Design Pattern
 
 Let's face it, picking the perfect design pattern can feel a bit like playing "match the superhero to the crisis". But the right fit makes all the difference in creating awesome test automation. Here's a guide for some frequent dilemmas:
 
@@ -995,7 +997,7 @@ Let's face it, picking the perfect design pattern can feel a bit like playing "m
 
 ***
 
-# 🗺️ Chapter 15: Continuing Your Design Pattern Journey
+# 🗺️ Continuing Your Design Pattern Journey
 
 You're already getting the hang of patterns, but becoming a true test automation ninja is an ongoing adventure! Let's talk about ways to take your skills to the next level.
 
@@ -1003,20 +1005,20 @@ You're already getting the hang of patterns, but becoming a true test automation
 
 1. **Practice Makes Perfect:**
 
-   * Don't just *read* about patterns, *use* them!  Try refactoring old tests to incorporate what you've learned.
-   * Build little side projects just to play with patterns in different ways.
+    * Don't just *read* about patterns, *use* them!  Try refactoring old tests to incorporate what you've learned.
+    * Build little side projects just to play with patterns in different ways.
 
 2. **There's Always More:**  The patterns we covered aren't the end of the road. Check out these interesting ones:
 
-   * **Adapter:**  Need to make two things that weren't designed for each other work together? Adapter to the rescue!
-   * **Composite:**  Treat a whole collection of objects as a single object – can simplify certain scenarios.
-   * **Proxy:**  Add extra functionality or control access to an object by wrapping it in a Proxy.
+    * **Adapter:**  Need to make two things that weren't designed for each other work together? Adapter to the rescue!
+    * **Composite:**  Treat a whole collection of objects as a single object – can simplify certain scenarios.
+    * **Proxy:**  Add extra functionality or control access to an object by wrapping it in a Proxy.
 
 3. **Learn from the Pros:**
 
-   * **GitHub Time:**  Dig into projects that use patterns heavily. See how the patterns work in a real context.
-   * **Blogs & Tutorials:**  Tons of experienced testers share their knowledge – find articles that resonate with you and try applying their techniques.
-   * **Forums:**  Get advice and learn alongside other testers who are figuring out patterns too!
+    * **GitHub Time:**  Dig into projects that use patterns heavily. See how the patterns work in a real context.
+    * **Blogs & Tutorials:**  Tons of experienced testers share their knowledge – find articles that resonate with you and try applying their techniques.
+    * **Forums:**  Get advice and learn alongside other testers who are figuring out patterns too!
 
 ## Inspiration is Everywhere!
 
